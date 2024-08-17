@@ -1,7 +1,7 @@
 "use client"
 
 import Loader from "@/components/Loader";
-import PostMin from "@/components/PostMin";
+import PostComponent from "@/components/PostComponent";
 import Post from "@/interfaces/post";
 import User from "@/interfaces/user";
 import axios from "axios";
@@ -108,9 +108,10 @@ export default function Home() {
       </div>
 
       {/* The main component */}
+      {/* // ! Manage the display of the post depending of the position on the page */}
       <main className="my-32 lg:py-10 lg:my-0 lg:w-4/5 lg:absolute lg:-right-0">
         {posts && posts.map((post) => {
-          return <PostMin key={post._id} post={post} userId={user?._id as string} />
+          return <PostComponent key={post._id} post={post} userId={user?._id as string} />
         })}
         {loading && <Loader size={40} color="#eab308" />}
       </main>

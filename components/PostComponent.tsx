@@ -12,7 +12,7 @@ import EmojiPicker, { EmojiClickData, Theme } from 'emoji-picker-react';
 
 
 
-function PostMin({post, userId}: {post: Post, userId: string}) {
+function PostComponent({post, userId}: {post: Post, userId: string}) {
 
     const [poster, setPoster] = useState<User | null>(null);
     const [following, setFollowing] = useState<boolean>(false);
@@ -175,7 +175,6 @@ function PostMin({post, userId}: {post: Post, userId: string}) {
         <>
             {poster && <div className="bg-zinc-900 rounded-md m-6 lg:w-1/2 lg:mx-auto py-2">
                 <div className="grid grid-cols-2 items-center border-gray-700 border-b">
-                    {/* // ! Manage story and link to direct to user's profile on click */}
                     <div className="flex items-center">
                         <div onClick={() => {if(poster.story) setDisplayStory(true)}} className={`lg:w-24 lg:h-24 w-16 h-16 rounded-full m-3 bg-no-repeat bg-center bg-cover ${(poster.story) && "cursor-pointer border-white border-2"}`} style={{backgroundImage: `url("/users/profile_pictures/${post.userProfile === "" || typeof post.userProfile !== "string" ? "unknown.png" : post.userProfile}")`}}></div>
                         <h2>{post.userName}</h2>
@@ -254,4 +253,4 @@ function PostMin({post, userId}: {post: Post, userId: string}) {
 }
 
 
-export default PostMin;
+export default PostComponent;
