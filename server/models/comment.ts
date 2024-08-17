@@ -4,12 +4,13 @@ import mongoose from "mongoose";
 
 const commentSchema = new mongoose.Schema({
     issuer: String,
+    issuerUsername: String,
     content: String,
     likes: {
-        type: Number,
-        default: 0
+        type: Array,
+        default: []
     },
-    replies: {
+    dislikes: {
         type: Array,
         default: []
     }

@@ -3,7 +3,7 @@ import userModel from "@/server/models/user";
 import { verifyPassword } from "@/server/utils/managePassword";
 import { NextRequest, NextResponse } from "next/server";
 
-
+import jwt from "jsonwebtoken";
 
 
 export async function POST (req: NextRequest) {
@@ -26,7 +26,13 @@ export async function POST (req: NextRequest) {
         }
         else {
             console.log(user);
-            return NextResponse.json({message: "User successfully logged in!"}, {status: 200});
+            const response =  NextResponse.json(user, {status: 200});
+
+            const token = jwt.sign({ ...user }, process.env.JWT_SECRET as string);
+            response.cookies.set('connexiaToken', token, { httpOnly: true, sameSite: "strict", maxAge: 1000*60*60*24*10 });
+
+
+            return response;
         }
 
     } catch (error) {

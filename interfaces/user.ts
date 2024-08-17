@@ -2,6 +2,7 @@ export default interface User {
     _id?: string,
     name: string,
     username: string,
+    bio: string,
     profilePicture: string,
     story: string,
     email: string,

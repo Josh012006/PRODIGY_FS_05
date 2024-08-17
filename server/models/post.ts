@@ -3,12 +3,15 @@ import mongoose from "mongoose";
 
 
 const postSchema = new mongoose.Schema({
+    userName: String,
+    userId: String,
+    userProfile: String,
     media: String,
     mediaType: String,
     description: String,
     likes: {
-        type: Number,
-        default: 0
+        type:Array,
+        default: []
     },
     tags: {
         type: Array,
