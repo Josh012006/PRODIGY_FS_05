@@ -100,14 +100,14 @@ function CommentDisplay({comment, userId} : {comment: Comment, userId: string}) 
 
 
     return (
-        <div className="bg-zinc-800 m-2 rounded-lg p-2">
+        <div className="bg-zinc-800 m-4 rounded-xl p-2">
             <Link href={`/profile/${comment.issuer}`} className="text-sm font-bold">{comment.issuerUsername}</Link>
             <p className="my-1">
                 {comment.content}
             </p>
             <div className="flex items-center justify-end">
-                <p className="m-2"><i className={`m-1 fa-thumbs-up ${(liked)? "text-blue-500 fa-solid": "text-white fa-regular"} cursor-pointer`} onClick={handleLike}></i> {likes}</p>
-                <p className="m-2"><i className={`m-1 fa-thumbs-down ${(disLiked)? "text-blue-500 fa-solid": "text-white fa-regular"} cursor-pointer`} onClick={handleDisLike}></i> {disLikes}</p>
+                <p className="mx-2"><i className={`mx-1 fa-thumbs-up ${(liked)? "text-blue-500 fa-solid": "text-white fa-regular"} cursor-pointer`} onClick={handleLike}></i> {likes}</p>
+                <p className="mx-2"><i className={`mx-1 fa-thumbs-down ${(disLiked)? "text-blue-500 fa-solid": "text-white fa-regular"} cursor-pointer`} onClick={handleDisLike}></i> {disLikes}</p>
             </div>
         </div>
     )

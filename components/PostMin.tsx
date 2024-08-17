@@ -8,6 +8,8 @@ import { useEffect, useState } from "react";
 import Loader from "./Loader";
 import CommentDisplay from "./CommentDisplay";
 
+import EmojiPicker, { EmojiClickData, Theme } from 'emoji-picker-react';
+
 
 
 function PostMin({post, userId}: {post: Post, userId: string}) {
@@ -21,11 +23,20 @@ function PostMin({post, userId}: {post: Post, userId: string}) {
     const [likes, setLikes] = useState(0);
     const [comments, setComments] = useState<Comment[]>([]);
 
+    const [visibleComments, setVisibleComments] = useState(0);
+
 
     const [newComment, setNewComment] = useState("");
     const [loadingAddComment, setLoadingAddComment] = useState(false);
 
+    const [displayEmoji, setDisplayEmoji] = useState(false);
+    const handleEmojiClick = (emojiData: EmojiClickData, event: MouseEvent) => {
+        setNewComment(prev => prev + emojiData.emoji);
+    };
 
+    const [mediaExpansion, setMediaExpansion] = useState(false);
+
+    const [displayStory, setDisplayStory] = useState(false);
 
 
     useEffect(() => {
@@ -59,7 +70,7 @@ function PostMin({post, userId}: {post: Post, userId: string}) {
             setLiked(post.likes.includes(userId));
             setLikes(post.likes.length);
         }
-    }, [poster, userId]);
+    }, [poster, userId, post]);
 
     useEffect(() => {
         async function fetchComments() {
@@ -67,6 +78,7 @@ function PostMin({post, userId}: {post: Post, userId: string}) {
                 const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/comments/getFromTab`, JSON.stringify({commentsTab: post.comments}), {headers: {"Content-Type": "application/json"}, validateStatus: status => status >= 200});
 
                 setComments(response.data as Comment[]);
+                setVisibleComments(((response.data as Comment[]).length > 3)? 3 : (response.data as Comment[]).length);
 
             } catch (error) {
                 console.log("An error in fetch comments function in post with id ", post._id);
@@ -145,6 +157,18 @@ function PostMin({post, userId}: {post: Post, userId: string}) {
         }
     }
 
+    useEffect(() => {
+        if(comments) {
+            if(visibleComments % 3 !== 0) {
+                setVisibleComments(visibleComments + 1);
+            }
+        }
+    }, [comments]);
+
+    useEffect(() => {
+        console.log(visibleComments);
+    }, [visibleComments]);
+
 
 
     return(
@@ -153,17 +177,34 @@ function PostMin({post, userId}: {post: Post, userId: string}) {
                 <div className="grid grid-cols-2 items-center border-gray-700 border-b">
                     {/* // ! Manage story and link to direct to user's profile on click */}
                     <div className="flex items-center">
-                        <div className="lg:w-24 lg:h-24 w-16 h-16 rounded-full m-3 bg-no-repeat bg-center bg-cover" style={{backgroundImage: `url("/users/profile_pictures/${post.userProfile === "" || typeof post.userProfile !== "string" ? "unknown.png" : post.userProfile}")`}}></div>
+                        <div onClick={() => {if(poster.story) setDisplayStory(true)}} className={`lg:w-24 lg:h-24 w-16 h-16 rounded-full m-3 bg-no-repeat bg-center bg-cover ${(poster.story) && "cursor-pointer border-white border-2"}`} style={{backgroundImage: `url("/users/profile_pictures/${post.userProfile === "" || typeof post.userProfile !== "string" ? "unknown.png" : post.userProfile}")`}}></div>
                         <h2>{post.userName}</h2>
                     </div>
                     {(poster._id !== userId) && <button className="mx-5 h-10 w-32 bg-zinc-800 rounded-md" onClick={handleFollow}>{(following)? "Following": "Follow"}</button>}
                 </div>
-                <div>
+                {displayStory && <div className="w-full h-full absolute top-0 left-0 z-10" style={{backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8))"}}>
+                    <i className="fa-solid fa-x m-4 cursor-pointer" aria-hidden="true" onClick={() => {setDisplayStory(false)}}></i>
+                    <div className="h-full flex items-center">
+                        <video className="w-full border-y border-gray-700" controls>
+                            <source src={`/users/stories/${poster.story}`} type="video/mp4" />
+                        </video>
+                    </div>
+                </div>}
+                <div onClick={() => {setMediaExpansion(true)}} className="cursor-pointer">
                     {post.mediaType === "image" && <img className="w-full border-y border-gray-700" alt="media" src={`/posts/medias/${post.media}`} />}
                     {post.mediaType === "video" && <video className="w-full border-y border-gray-700" controls>
                         <source src={`/posts/medias/${post.media}`} type="video/mp4" />
                     </video>}
                 </div>
+                {mediaExpansion && <div className="w-full h-full absolute top-0 left-0 z-10" style={{backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8))"}}>
+                    <i className="fa-solid fa-x m-4 cursor-pointer" aria-hidden="true" onClick={() => {setMediaExpansion(false)}}></i>
+                    <div className="h-full flex items-center">
+                        {post.mediaType === "image" && <img className="w-full border-y border-gray-700" alt="media" src={`/posts/medias/${post.media}`} />}
+                        {post.mediaType === "video" && <video className="w-full border-y border-gray-700" controls>
+                            <source src={`/posts/medias/${post.media}`} type="video/mp4" />
+                        </video>}
+                    </div>
+                </div>}
                 <div className="flex items-center">
                     <p className="m-2">
                         <i className={`${liked? "fa-solid text-red-500" : "fa-regular text-white"} fa-heart m-1 cursor-pointer`} aria-hidden="true" onClick={handleLike}></i> {likes} 
@@ -181,8 +222,12 @@ function PostMin({post, userId}: {post: Post, userId: string}) {
                     </p>
                 </div>
                 {displayComments && comments && <div>
-                    <div className="w-full p-2 grid grid-cols-6 items-center">
-                        <input name="comment" id="comment" placeholder="Add a new comment..." className="rounded-full h-9 p-3 mx-1 col-span-5 text-white bg-zinc-800" value={newComment} onChange={(e) => {setNewComment(e.target.value)}} />
+                    <div className="w-full p-2 grid grid-cols-6 items-center text-center relative">
+                        <input name="comment" id="comment" placeholder="Add a new comment..." className="rounded-full h-9 p-3 mx-1 col-span-4 text-white bg-zinc-800" value={newComment} onChange={(e) => {setNewComment(e.target.value)}} />
+                        <i className="m-1 fa-regular fa-face-grin-wide text-lg lg:text-xl cursor-pointer" aria-hidden="true" onClick={() => {setDisplayEmoji(!displayEmoji)}}></i>
+                        {displayEmoji && <div className="absolute z-10 -top-[450px] lg:left-24">
+                            <EmojiPicker theme={'dark' as Theme} onEmojiClick={handleEmojiClick} />
+                        </div>}
                         {!loadingAddComment && <button className="mx-1 h-9 bg-zinc-800 rounded-md" onClick={handleAddComment}>Add</button>}
                         {loadingAddComment && <div className="col-span-1">
                             <Loader size={20} color="#eab308" />
@@ -191,12 +236,17 @@ function PostMin({post, userId}: {post: Post, userId: string}) {
                     <div>
                         <div>
                             <>
-                                {comments && comments.map((comment) => {
+                                {comments && comments.reverse().slice(0, visibleComments).map((comment) => {
                                     return <CommentDisplay key={comment._id} comment={comment} userId={userId} />
                                 })}
                             </>
                         </div>
                     </div>
+                    {<div className="flex items-center justify-end gap-2 px-4">
+                        {comments.length > 3 && visibleComments < comments.length && <p className="cursor-pointer" onClick={() => setVisibleComments((visibleComments + 3 < comments.length) ? visibleComments + 3 : comments.length)}>See More</p>}
+                        {comments.length > 3 && visibleComments > 3 && visibleComments < comments.length && <p>|</p>}
+                        {comments.length > 3 && visibleComments > 3 && visibleComments <= comments.length && <p className="cursor-pointer" onClick={() => setVisibleComments((comments.length > 3)? 3 : comments.length)}>See Less</p>}
+                    </div>}
                 </div>}
             </div>}
         </>

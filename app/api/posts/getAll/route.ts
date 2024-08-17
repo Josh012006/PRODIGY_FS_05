@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
         
         await connectDB();
 
-        const posts = await postModel.find().sort({updatedAt: 1});
+        const posts = await postModel.find().sort({ createdAt: -1 });
 
         return NextResponse.json(posts, {status: 200});
 
