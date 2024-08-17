@@ -176,7 +176,7 @@ function PostComponent({post, userId}: {post: Post, userId: string}) {
             {poster && <div className="bg-zinc-900 rounded-md m-6 lg:w-1/2 lg:mx-auto py-2">
                 <div className="grid grid-cols-2 items-center border-gray-700 border-b">
                     <div className="flex items-center">
-                        <div onClick={() => {if(poster.story) setDisplayStory(true)}} className={`lg:w-24 lg:h-24 w-16 h-16 rounded-full m-3 bg-no-repeat bg-center bg-cover ${(poster.story) && "cursor-pointer border-white border-2"}`} style={{backgroundImage: `url("/users/profile_pictures/${post.userProfile === "" || typeof post.userProfile !== "string" ? "unknown.png" : post.userProfile}")`}}></div>
+                        <div onClick={() => {if(poster.story) setDisplayStory(true)}} className={`lg:w-24 lg:h-24 w-16 h-16 rounded-full m-3 bg-no-repeat bg-center bg-cover ${(poster.story) && "cursor-pointer border-white border-2"}`} style={{backgroundImage: `url("/users/profile_pictures/${post.userProfile === "" || typeof post.userProfile !== "string" ? "unknown.jpg" : post.userProfile}")`}}></div>
                         <h2>{post.userName}</h2>
                     </div>
                     {(poster._id !== userId) && <button className="mx-5 h-10 w-32 bg-zinc-800 rounded-md" onClick={handleFollow}>{(following)? "Following": "Follow"}</button>}

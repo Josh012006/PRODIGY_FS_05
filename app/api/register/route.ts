@@ -54,7 +54,7 @@ export async function POST (req: NextRequest) {
                 throw Error("An error occured while trying to add user!");
             }
 
-            console.log("Successfully logged in!");
+            console.log("Successfully registered in!");
             const response =  NextResponse.json(user, {status: 200});
 
             const token = jwt.sign({ ...user }, process.env.JWT_SECRET as string);

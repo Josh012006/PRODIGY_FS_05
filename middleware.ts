@@ -3,13 +3,18 @@ import { NextRequest, NextResponse } from "next/server";
 export function middleware(req: NextRequest) {
     const { pathname } = req.nextUrl;
 
-    // Allow requests to /login without checking for the token
-    if (pathname === "/auth/login" || pathname === "/auth/register") {
-        return NextResponse.next();
-    }
-
     // Check for the token in cookies
     const token = req.cookies.get("connexiaToken");
+
+    // Allow requests to /login without checking for the token
+    if (pathname === "/auth/login" || pathname === "/auth/register") {
+        if(!token) {
+            return NextResponse.next();
+        }
+        else {
+            return NextResponse.redirect(new URL('/', req.url));
+        }
+    }
 
     if (!token) {
         // Redirect to /login if token is missing
@@ -21,5 +26,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/'],
+    matcher: ['/', '/post/:path*', '/search', '/auth/login', '/auth/register', '/profile/:path*'],
 }
