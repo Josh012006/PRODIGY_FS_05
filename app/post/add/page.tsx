@@ -35,7 +35,7 @@ function AddPost({user} : {user: User}) {
 
     const [mediaType, setMediaType] = useState("image");
 
-    const [tags, setTags] = useState<string[]>(["tokyo"]);
+    const [tags, setTags] = useState<string[]>([]);
     const [tag, setTag] = useState("");
 
 
@@ -119,7 +119,7 @@ function AddPost({user} : {user: User}) {
                 </div>
                 <div className="p-2">
                     {tags && tags.map((tag, index) => {
-                        return <span key={index} className="m-2 py-2 px-3 rounded bg-zinc-800">{tag} <i className="cursor-pointer fa-solid fa-x m-1" aria-hidden="true" onClick={() => {setTags(tags.filter((t) => {t !== tag}))}}></i></span>
+                        return <span key={index} className="m-2 py-2 px-3 inline-block rounded bg-zinc-800">{tag} <i className="cursor-pointer fa-solid fa-x m-1" aria-hidden="true" onClick={() => {setTags(tags.filter((t) => {t !== tag}))}}></i></span>
                     })}
                 </div>
                 <button type='submit' form="addPostForm" className="bg-yellow-600 hover:bg-yellow-500 w-36 rounded-md min-h-10 mx-auto my-4">Add Post</button>

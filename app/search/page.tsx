@@ -4,7 +4,6 @@ import Loader from "@/components/Loader";
 import Post from "@/interfaces/post";
 import User from "@/interfaces/user";
 import axios from "axios";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 

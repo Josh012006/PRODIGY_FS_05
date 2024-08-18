@@ -100,7 +100,7 @@ export function Layout({children}: {children: ReactNode}) {
                 {/* The main component */}
                 <main className="my-32 lg:py-10 lg:my-0 lg:w-4/5 lg:absolute lg:-right-0">
                     {loading && <Loader size={40} color="#eab308" />}
-                    {!user && React.cloneElement(children as React.ReactElement<any>, {user})}
+                    {user && React.cloneElement(children as React.ReactElement<any>, {user})}
                 </main>
 
 

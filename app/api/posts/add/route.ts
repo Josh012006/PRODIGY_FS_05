@@ -5,12 +5,17 @@ import path from "path";
 import postModel from "@/server/models/post";
 
 import { v4 as uuidv4 } from "uuid";
+import userModel from "@/server/models/user";
+import connectDB from "@/server/config/db";
 
 
 const UPLOAD_DIR = path.resolve("public/posts/medias");
 
 export async function POST(req: NextRequest) {
     try {
+
+        await connectDB();
+        
         const formData = await req.formData();
 
         const body = Object.fromEntries(formData);
@@ -46,6 +51,17 @@ export async function POST(req: NextRequest) {
             if(!post) {
                 throw Error("An error occured while trying to add post!");
             }
+
+            const user = await userModel.findById(body.userId);
+
+            
+            if(!user) {
+                throw Error("An error occured while trying to add post id to user posts tab!");
+            }
+
+            user.posts.push(post._id);
+
+            await user.save();
 
             return NextResponse.json(post, {status: 201});
 
