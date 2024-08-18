@@ -25,7 +25,7 @@ Thirdly, you run **npm run dev**
 
 ## Anyone can access this app
 I've hosted it on vercel. 
-Here is the link: 
+Here is the link: https://connexia.vercel.app/
 So go, give it a try and leave a feedback!
 
 ## Hope you enjoy
