@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Preview
+<img alt="preview1" src="public/preview1.png" /> 
+<img alt="preview2" src="public/preview2.png" /> 
 
-## Getting Started
+## About the project
+The project is a social media platform. It implements complex operations and relationships between models.
 
-First, run the development server:
+## How it works
+Like any basic social media app, the users can create profile and connect to the app. Then, they have access to all the recent users' posts. They can like posts, comment them and even like the comments. There is an integration of emojis and stories for the users.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+They can themselves add posts, follow other users and have followers. They can see another user's profile page with its username (that is unique) and its bio. On their on profile, they can change their infos, their profile picture and their story or decide to logout.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## How to start
+There are certain essentials steps you must follow after **cloning the project**, in other to be able to use the app properly.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+First you need to **create a database and add an admin with an email and a password**.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Secondly, you must **fill the .env file** with the good environnement variables:
+MONGO_URI=
+NEXT_PUBLIC_API_URL=
+JWT_SECRET=
 
-## Learn More
+Thirdly, you run **npm run dev**
 
-To learn more about Next.js, take a look at the following resources:
+## Anyone can access this app
+I've hosted it on vercel. 
+Here is the link: 
+So go, give it a try and leave a feedback!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Hope you enjoy
+Have fun, leave a star if you like please and any contribution or improvement is welcome.
