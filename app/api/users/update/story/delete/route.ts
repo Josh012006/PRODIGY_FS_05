@@ -15,17 +15,19 @@ export async function POST(req: NextRequest) {
 
         await connectDB();
 
-        const pathToFile = path.resolve(UPLOAD_DIR, oldStory as string);
+        if(oldStory) {
+            const pathToFile = path.resolve(UPLOAD_DIR, oldStory as string);
 
-        fs.unlink(pathToFile, (err) => {
-            if (err) {
-                console.error('Error deleting the file:', err);
-                throw Error("An error occurred while deleting user's story");
-            }
-            console.log('File deleted successfully');
-        });
+            fs.unlink(pathToFile, (err) => {
+                if (err) {
+                    console.error('Error deleting the file:', err);
+                    throw Error("An error occurred while deleting user's story");
+                }
+                console.log('File deleted successfully');
+            });
+        }
 
-        const user = await userModel.findById(userId);
+        const user = await userModel.findByIdAndUpdate(userId, {story: ""}, {new: true});
 
         if(!user) {
             throw Error("No such user!");

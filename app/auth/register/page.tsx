@@ -51,6 +51,8 @@ function RegisterPage() {
     const handleRegister = async (e: FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault();
+            
+            window.scrollTo(0, 0);
 
             const formData = new FormData(e.target as HTMLFormElement);
 
@@ -116,10 +118,10 @@ function RegisterPage() {
     return(
         <div className="py-16">
             <Image src="/logo.png" alt="Connexia Logo" width={34} height={34} className="mx-auto mt-20" />
-            <h1 className="text-xl lg:text-3xl text-center mt-11 mb-11">Create a profile</h1>
+            <h1 className="text-xl lg:text-3xl text-center my-11">Create a profile</h1>
             {loading && <Loader size={40} color="#eab308" />}
             {error && <ErrorAlert>{error}</ErrorAlert>}
-            <form className="rounded-lg bg-neutral-700 w-11/12 sm:w-1/4 flex flex-col p-6 mx-auto" id="registerForm" onSubmit={handleRegister}>
+            <form className="rounded-lg bg-neutral-700 w-11/12 sm:w-1/4 flex flex-col p-6 my-4 mx-auto" id="registerForm" onSubmit={handleRegister}>
                 <label htmlFor="name" className="my-2">Your name</label>
                 <input type="text" placeholder="John Doe" className="h-11 rounded-md p-3 bg-transparent text-white border-2 border-white" required name="name" id="name" />
                 <label htmlFor="username" className="my-2">Your username</label>

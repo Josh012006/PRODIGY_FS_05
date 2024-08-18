@@ -20,8 +20,12 @@ function LoginPage() {
     const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
         try {
             e.preventDefault();
+
+            window.scrollTo(0, 0);
+            
             setError('');
             setLoading(true);
+
 
             const form = e.target;
             const formData = new FormData(form as HTMLFormElement);
@@ -61,10 +65,10 @@ function LoginPage() {
     return(
         <div className="py-16">
             <Image src="/logo.png" alt="Connexia Logo" width={34} height={34} className="mx-auto mt-20" />
-            <h1 className="text-xl lg:text-3xl text-center mt-11 mb-11">Re Dive</h1>
+            <h1 className="text-xl lg:text-3xl text-center my-11">Re Dive</h1>
             {loading && <Loader size={40} color="#eab308" />}
             {error && <ErrorAlert>{error}</ErrorAlert>}
-            <form className="rounded-lg bg-neutral-700 w-11/12 sm:w-1/4 flex flex-col p-6 mx-auto" id="loginForm" onSubmit={handleLogin}>
+            <form className="rounded-lg bg-neutral-700 w-11/12 sm:w-1/4 flex flex-col my-4 p-6 mx-auto" id="loginForm" onSubmit={handleLogin}>
                 <label htmlFor="email" className="my-2">Email</label>
                 <input type="email" placeholder="example@gmail.com" className="h-11 rounded-md p-3 bg-transparent text-white border-2 border-white" required name="email" id="email" />
                 <label htmlFor="password" className="my-2">Password</label>

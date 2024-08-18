@@ -9,10 +9,13 @@ import Link from "next/link";
 import Image from "next/image";
 import User from "@/interfaces/user";
 import PostComponent from "@/components/PostComponent";
+import { useUser } from "@/components/Layout";
 
 
 
-export default function PostPage({user} : {user: User}) {
+export default function PostPage() {
+
+    const user: User | null = useUser();
 
     const id = useParams().id;
 

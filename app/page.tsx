@@ -1,5 +1,6 @@
 "use client"
 
+import { useUser } from "@/components/Layout";
 import Loader from "@/components/Loader";
 import PostComponent from "@/components/PostComponent";
 import Post from "@/interfaces/post";
@@ -7,12 +8,15 @@ import User from "@/interfaces/user";
 import axios from "axios";
 import { useEffect, useState, useRef, useCallback } from "react";
 
-export default function Home({user} : {user: User}) {
+export default function Home() {
+
+  const user: User | null = useUser();
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [visiblePosts, setVisiblePosts] = useState<{[key: string]: boolean}>({});
 
   const observerRef = useRef<IntersectionObserver | null>(null);
+  
 
   const [loading, setLoading] = useState(false);
 
@@ -27,6 +31,11 @@ export default function Home({user} : {user: User}) {
         if (response.status === 200) {
           setLoading(false);
           setPosts(response.data as Post[]);
+          const initialVisibility = (response.data as Post[]).reduce((acc: any, post: Post) => {
+              acc[post._id as string] = false;
+              return acc;
+          }, {});
+          setVisiblePosts(initialVisibility);
           return;
         }
 
@@ -57,23 +66,37 @@ export default function Home({user} : {user: User}) {
   }, []);
 
   useEffect(() => {
-      observerRef.current = new IntersectionObserver(observerCallback, {
-          root: null, // viewport
-          rootMargin: '0px',
-          threshold: 0.1, // Trigger when 10% of the post is visible
-      });
+    if (posts.length > 0) {
+        if (observerRef.current) {
+            observerRef.current.disconnect();
+        }
 
-      posts.forEach(post => {
-          const postElement = document.querySelector(`[data-id="${post._id}"]`);
-          if (postElement) {
-              observerRef.current?.observe(postElement);
-          }
-      });
+        // Utiliser un timeout pour attendre que les posts soient complètement rendus
+        const timeoutId = setTimeout(() => {
+            observerRef.current = new IntersectionObserver(observerCallback, {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1,
+            });
 
-      return () => {
-          observerRef.current?.disconnect();
-      };
-  }, [observerCallback, posts]);
+            posts.forEach(post => {
+                const postElement = document.querySelector(`[data-id="${post._id}"]`);
+                if (postElement) {
+                    observerRef.current?.observe(postElement);
+                }
+            });
+        }, 1500);
+
+        return () => {
+            clearTimeout(timeoutId); // Nettoyage du timeout
+            observerRef.current?.disconnect();
+        };
+    }
+  }, [posts, observerCallback]);
+
+  useEffect(() => {
+    console.log(visiblePosts);
+  }, [visiblePosts]);
 
 
 
@@ -81,7 +104,17 @@ export default function Home({user} : {user: User}) {
     <>
       {/* // ! Manage the display of the post depending of the position on the page */}
         {posts && posts.map((post) => {
-          return <PostComponent style={{display: visiblePosts[post._id as string] ? "block" : "none"}} key={post._id} post={post} userId={user?._id as string} />
+            return (
+                <PostComponent
+                    style={{
+                        transition: "opacity 0.5s ease-in-out",
+                        opacity: visiblePosts[post._id as string] ? 1 : 0
+                    }}
+                    key={post._id}
+                    post={post}
+                    userId={user?._id as string}
+                />
+            );
         })}
         {loading && <Loader size={40} color="#eab308" />}
     </>

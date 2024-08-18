@@ -1,5 +1,6 @@
 "use client"
 
+import { useUser } from "@/components/Layout";
 import Loader from "@/components/Loader";
 import Post from "@/interfaces/post";
 import User from "@/interfaces/user";
@@ -8,7 +9,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 
-export default function SearchPage({user} : {user: User}) {
+export default function SearchPage() {
+
+    const user: User | null = useUser();
 
     const [search, setSearch] = useState("");
 

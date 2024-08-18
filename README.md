@@ -1,5 +1,6 @@
 ## Preview
 <img alt="preview1" src="public/preview1.png" /> 
+<img alt="preview3" src="public/preview3.png" /> 
 <img alt="preview2" src="public/preview2.png" /> 
 
 ## About the project

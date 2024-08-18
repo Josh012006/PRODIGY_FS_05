@@ -43,15 +43,17 @@ export async function POST(req: NextRequest) {
             if(user) {
                 console.log(user);
 
-                const pathToFile = path.resolve(UPLOAD_DIR, body.oldStory as string);
+                if(body.oldStory) {
+                    const pathToFile = path.resolve(UPLOAD_DIR, body.oldStory as string);
 
-                fs.unlink(pathToFile, (err) => {
-                    if (err) {
-                        console.error('Error deleting the file:', err);
-                        throw Error("An error occurred while deleting user's story");
-                    }
-                    console.log('File deleted successfully');
-                });
+                    fs.unlink(pathToFile, (err) => {
+                        if (err) {
+                            console.error('Error deleting the file:', err);
+                            throw Error("An error occurred while deleting user's story");
+                        }
+                        console.log('File deleted successfully');
+                    });
+                }
 
                 return NextResponse.json({
                     message: "Story successfully updated"

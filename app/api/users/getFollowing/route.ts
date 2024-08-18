@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
 
         await connectDB();
 
-        const following = userModel.find({ _id: {$in: followingTab}});
+        const following = await userModel.find({ _id: {$in: followingTab}});
 
         return NextResponse.json(following, {status: 200});
 

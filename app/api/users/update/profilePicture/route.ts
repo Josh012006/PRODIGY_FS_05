@@ -6,6 +6,7 @@ import path from "path";
 import { v4 as uuidv4 } from "uuid";
 import userModel from "@/server/models/user";
 import connectDB from "@/server/config/db";
+import postModel from "@/server/models/post";
 
 
 
@@ -43,15 +44,19 @@ export async function POST(req: NextRequest) {
             if(user) {
                 console.log(user);
 
-                const pathToFile = path.resolve(UPLOAD_DIR, body.oldFile as string);
+                const updatedPosts = await postModel.updateMany({ userId: body.userId }, { userProfile: uniqueFileName }, {new: true});
 
-                fs.unlink(pathToFile, (err) => {
-                    if (err) {
-                        console.error('Error deleting the file:', err);
-                        throw Error("An error occurred while deleting user's profile picture");
-                    }
-                    console.log('File deleted successfully');
-                });
+                if(body.oldFile) {
+                    const pathToFile = path.resolve(UPLOAD_DIR, body.oldFile as string);
+
+                    fs.unlink(pathToFile, (err) => {
+                        if (err) {
+                            console.error('Error deleting the file:', err);
+                            throw Error("An error occurred while deleting user's profile picture");
+                        }
+                        console.log('File deleted successfully');
+                    });
+                }
 
                 return NextResponse.json({
                     message: "Profile picture successfully updated"

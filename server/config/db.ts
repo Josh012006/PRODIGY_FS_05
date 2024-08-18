@@ -7,7 +7,6 @@ const options = {
     serverSelectionTimeoutMS: 30000,
     socketTimeoutMS: 45000,
     connectTimeoutMS: 30000,
-    maxTimeMS: 60000
 };
 
 const connectDB = async () => {
