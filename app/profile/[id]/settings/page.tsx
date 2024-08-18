@@ -293,7 +293,7 @@ export default function SettingsPage() {
                 {changeStory && <div className="w-full h-full fixed top-0 left-0 z-10" style={{backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8))"}}>
                     <div className="fixed top-28 lg:top-0 w-full left-0">
                         <i className="fa-solid fa-x mx-4 my-2 cursor-pointer" aria-hidden="true" onClick={() => {setChangeStory(false)}}></i>
-                        <form className="rounded-lg bg-neutral-700 w-11/12 sm:w-1/2 flex flex-col p-6 mx-auto my-5 lg:my-40" id="changeStoryForm" onSubmit={handleChangeStory}>
+                        <form className="rounded-lg bg-neutral-700 w-11/12 sm:w-1/2 flex flex-col p-6 mx-auto my-5 lg:my-10" id="changeStoryForm" onSubmit={handleChangeStory}>
                             {loadingChangeStory && <Loader size={40} color="#eab308" />}
                             {errorChangeStory && <ErrorAlert>{errorChangeStory}</ErrorAlert>}
                             <label htmlFor="media" className="my-2">Media</label>
@@ -326,7 +326,7 @@ export default function SettingsPage() {
                 {changeBio && <div className="w-full h-full fixed top-0 left-0 z-10" style={{backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8))"}}>
                     <div className="fixed top-28 lg:top-0 w-full left-0">
                         <i className="fa-solid fa-x mx-4 my-2 cursor-pointer" aria-hidden="true" onClick={() => {setChangeBio(false)}}></i>
-                        <form className="rounded-lg bg-neutral-700 w-11/12 sm:w-1/2 flex flex-col p-6 mx-auto my-5 lg:my-40" id="changeBioForm" onSubmit={handleChangeBio}>
+                        <form className="rounded-lg bg-neutral-700 w-11/12 sm:w-1/2 flex flex-col p-6 mx-auto my-5 lg:my-10" id="changeBioForm" onSubmit={handleChangeBio}>
                             {loadingChangeBio && <Loader size={40} color="#eab308" />}
                             {errorChangeBio && <ErrorAlert>{errorChangeBio}</ErrorAlert>}
                             <label htmlFor="bio" className="my-2">Bio</label>
@@ -338,7 +338,7 @@ export default function SettingsPage() {
                 {changePassword && <div className="w-full h-full fixed top-0 left-0 z-10" style={{backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8))"}}>
                     <div className="fixed top-28 lg:top-0 w-full left-0">
                         <i className="fa-solid fa-x mx-4 my-2 cursor-pointer" aria-hidden="true" onClick={() => {setChangePassword(false)}}></i>
-                        <form className="rounded-lg bg-neutral-700 w-11/12 sm:w-1/2 flex flex-col p-6 mx-auto my-5 lg:my-40" id="changePasswordForm" onSubmit={handleChangePassword}>
+                        <form className="rounded-lg bg-neutral-700 w-11/12 sm:w-1/2 flex flex-col p-6 mx-auto my-5 lg:my-10" id="changePasswordForm" onSubmit={handleChangePassword}>
                             {loadingChangePassword && <Loader size={40} color="#eab308" />}
                             {errorChangePassword && <ErrorAlert>{errorChangePassword}</ErrorAlert>}
                             <label htmlFor="old-password" className="my-2">Actual Password</label>
@@ -355,7 +355,7 @@ export default function SettingsPage() {
                 {changeProfPic && <div className="w-full h-full fixed top-0 left-0 z-10" style={{backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8))"}}>
                     <div className="fixed top-28 lg:top-0 w-full left-0">
                         <i className="fa-solid fa-x my-2 mx-4 cursor-pointer" aria-hidden="true" onClick={() => {setChangeProfPic(false)}}></i>
-                        <form className="rounded-lg bg-neutral-700 w-11/12 sm:w-1/2 flex flex-col p-6 mx-auto my-5 lg:my-40" id="changeProfPicForm" onSubmit={handleChangeProfPic}>
+                        <form className="rounded-lg bg-neutral-700 w-11/12 sm:w-1/2 flex flex-col p-6 mx-auto my-5 lg:my-10" id="changeProfPicForm" onSubmit={handleChangeProfPic}>
                             {loadingChangeProfPic && <Loader size={40} color="#eab308" />}
                             {errorChangeProfPic && <ErrorAlert>{errorChangeProfPic}</ErrorAlert>}
                             <label htmlFor="media" className="my-2">Media</label>
