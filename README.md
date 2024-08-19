@@ -27,7 +27,7 @@ Thirdly, you run **npm run dev**
 I've hosted it on vercel but there is a slight problem with file management as I use fs module to manage images. But vercel only allow reading of files. I plan to solve it later by hosting the medias on AWS if possible. 
 Here is the link: https://connexia.vercel.app/
 
-But you can see a demo on this linkedin post: 
+But you can see a demo of the app run locally on this linkedin post: 
 
 ## Hope you enjoy
 Have fun, leave a star if you like please and any contribution or improvement is welcome.
