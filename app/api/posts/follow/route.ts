@@ -20,10 +20,9 @@ export async function PATCH(req: NextRequest) {
             user.followers.push(userId);
             user2.following.push(toFollowId);
         }
-
         else {
             user.followers = user.followers.filter((follower: string) => follower !== userId);
-            user2.following = user.following.filter((following: string) => following !== toFollowId);
+            user2.following = user2.following.filter((following: string) => following !== toFollowId);
         }
 
         await user.save();
