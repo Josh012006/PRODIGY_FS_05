@@ -342,7 +342,7 @@ export default function SettingsPage() {
                             {loadingChangePassword && <Loader size={40} color="#eab308" />}
                             {errorChangePassword && <ErrorAlert>{errorChangePassword}</ErrorAlert>}
                             <label htmlFor="old-password" className="my-2">Actual Password</label>
-                            <input type="old-password" placeholder="Your actual password" className="h-11 rounded-md p-3 bg-transparent text-white border-2 border-white" required name="old-password" id="old-password" />
+                            <input type="password" placeholder="Your actual password" className="h-11 rounded-md p-3 bg-transparent text-white border-2 border-white" required name="old-password" id="old-password" />
                             <br />
                             <label htmlFor="new-password" className="my-2">New Password</label>
                             <input type="password" placeholder="New password" className="h-11 rounded-md p-3 bg-transparent text-white border-2 border-white" required name="new-password" id="new-password" />

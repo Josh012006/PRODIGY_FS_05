@@ -3,11 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import userModel from "@/server/models/user";
 import User from "@/interfaces/user";
+import connectDB from "@/server/config/db";
 
 
 
 export async function GET(req:NextRequest) {
     try {
+
+        await connectDB();
         
         const token = req.cookies.get('connexiaToken')?.value;
 
