@@ -14,7 +14,7 @@ They can themselves add posts, follow other users and have followers. They can s
 ## How to start
 There are certain essentials steps you must follow after **cloning the project**, in other to be able to use the app properly.
 
-First you need to **create a database and add an admin with an email and a password**.
+First you need to **create a database**.
 
 Secondly, you must **fill the .env file** with the good environnement variables:
 MONGO_URI=
